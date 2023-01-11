@@ -4,21 +4,6 @@ class Tier{
 private:
     bool isEnd;
     Tier*next[26];
-    static bool isLeaf(Tier* node){
-        for (int i = 0; i < 26; ++i) {
-            if (node->next[i] != NULL) return false;
-        }
-        return true;
-    }
-    void popChar(Tier *pre,Tier *child){
-        for (int i = 0; i < 26; ++i) {
-            if (pre->next[i]==child){
-                pre->next[i]== nullptr;
-                break;
-            }
-        }
-        delete child;
-    }
 public:
     Tier() {
         isEnd = false;
@@ -49,24 +34,5 @@ public:
             if (node == NULL) return false;
         }
         return true;
-    }
-    void pops(std::string word){
-        if (search(word)){
-            std::stack<Tier*> TierStack;
-            Tier *node = this;
-            for (char c:word) {
-                node = node->next[c-'a'];
-                TierStack.push(node);
-            }
-            node -> isEnd = false;
-            while (!TierStack.empty()){
-                node = TierStack.top();
-                TierStack.pop();
-                Tier *pre = TierStack.top();
-                if (isLeaf(node)){
-                    popChar(pre,node);
-                }
-            }
-        }
     }
 };
